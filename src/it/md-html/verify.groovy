@@ -1,3 +1,3 @@
-File touchFile = new File( basedir, "target/touch.txt" );
+File generated = new File( basedir, "target/README.html" );
 
-assert touchFile.isFile()
+assert generated.isFile()

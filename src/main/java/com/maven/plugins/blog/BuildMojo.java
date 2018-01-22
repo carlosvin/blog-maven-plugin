@@ -61,7 +61,7 @@ public class BuildMojo extends AbstractMojo {
 		}
 		String[] includedFiles = fileSetManager.getIncludedFiles(inputFiles);
 		if (includedFiles == null || includedFiles.length == 0) {
-			getLog().warn("SKIP: There are no input files matching " + inputFiles);
+			getLog().warn("SKIP: There are no input files. " + getInputFilesToString());
 		} else {
 			if (!outputDirectory.exists()) {
 				outputDirectory.mkdirs();
@@ -72,8 +72,9 @@ public class BuildMojo extends AbstractMojo {
 				results.put(path, executor.submit(new ConvertToHtmlTask(path)));
 			}
 			try {
+				getLog().debug("Processing results");
+				executor.shutdown();
 				processResult(results);
-				// TODO process futures
 			} catch (InterruptedException e) {
 				throw new MojoExecutionException(e.getLocalizedMessage(), e);
 			}
@@ -81,8 +82,8 @@ public class BuildMojo extends AbstractMojo {
 	}
 
 	private void processResult(Map<Path, Future<Path>> results) throws InterruptedException {
-		if (executor.awaitTermination(10, TimeUnit.MINUTES)) {
-			getLog().info("Done");
+		if (executor.awaitTermination(5, TimeUnit.MINUTES)) {
+			getLog().info("Processed " + results.size() + " files");
 		} else {
 			getLog().error("Timeout processing files");
 		}
@@ -101,7 +102,11 @@ public class BuildMojo extends AbstractMojo {
 		this.inputFiles.addInclude("**/*.md");
 		this.inputFiles.addInclude("**/*.MD");
 		this.inputFiles.setDirectory(".");
-		getLog().info("'inputFiles' is not configured, using defaults: " + this.inputFiles);
+		getLog().info("'inputFiles' is not configured, using defaults: " + getInputFilesToString());
+	}
+
+	private String getInputFilesToString() {
+		return "Fileset matching " + inputFiles.getIncludes() + " in " + inputFiles.getDirectory();
 	}
 
 	class ConvertToHtmlTask implements Callable<Path> {
@@ -110,6 +115,7 @@ public class BuildMojo extends AbstractMojo {
 
 		public ConvertToHtmlTask(Path input) {
 			this.input = input;
+			getLog().debug("Processing... " + input);
 		}
 
 		public Path call() throws Exception {
@@ -123,9 +129,9 @@ public class BuildMojo extends AbstractMojo {
 			String fileName = input.getFileName().toString();
 			int i = fileName.lastIndexOf('.');
 			Path newFile = input.resolveSibling(fileName.substring(0, i) + ".html");
-			Path relNewFile = Paths.get(inputFiles.getDirectory()).relativize(newFile);
+			Path relNewFile = Paths.get(inputFiles.getDirectory()).relativize(newFile).normalize();
+			getLog().info("rel new file " + relNewFile.toString());
 			return outputDirectory.toPath().resolve(relNewFile);
 		}
-
 	}
 }
