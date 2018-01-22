@@ -4,17 +4,31 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class PathUtils {
-	public static Path change(Path inputdir, Path inputFile, Path outputDir) {
-		Path subpath = subpath(inputdir, inputFile);
+	public static Path change(Path inputDir, Path inputFile, Path outputDir) {
+		Path subpath = subpath(inputDir, inputFile);
 		return outputDir.resolve(subpath);
 	}
 
-	public static Path subpath(Path inputdir, Path inputFile) {
-		return subpath(inputdir.toString(), inputFile.toString());
+	public static Path subpath(Path inputDir, Path inputFile) {
+		int dirParts = inputDir.getNameCount();
+		int fileParts = inputFile.getNameCount();
+		if (fileParts > dirParts) {
+			return subpath(inputDir.toString(), inputFile.toString());			
+		} else {
+			return inputFile;
+		}
 	}
 
-	public static Path subpath(String inputDir, String inputFile) {
-		String path = inputFile.replace(inputDir, "");
+	private static Path subpath(String inputDir, String inputFile) {
+		System.out.println(inputFile + " inputdir: " + inputDir + " 1");
+
+		int index = inputFile.indexOf(inputDir);
+		if (index == -1) {
+			return Paths.get(inputFile);
+		}
+		String path = inputFile.substring(index + inputDir.length());
+		System.out.println(path + " 2");
+
 		if (path.startsWith("/") || path.startsWith("\\")) {
 			return Paths.get(".", path).normalize();
 		}

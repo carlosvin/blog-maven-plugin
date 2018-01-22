@@ -47,6 +47,7 @@ public class BuildMojo extends AbstractMojo {
 	private final ExecutorService executor;
 
 	private final MdToHtml mdToHtml;
+	private Path inputDirPath, outputDirPath;
 
 	@Inject
 	public BuildMojo(FileSetManager fileSetManager, MdToHtml mdToHtml) {
@@ -59,6 +60,8 @@ public class BuildMojo extends AbstractMojo {
 		if (inputFiles == null) {
 			setDefaultInput();
 		}
+		inputDirPath = Paths.get(inputFiles.getDirectory());
+		outputDirPath = outputDirectory.toPath();
 		String[] includedFiles = fileSetManager.getIncludedFiles(inputFiles);
 		if (includedFiles == null || includedFiles.length == 0) {
 			getLog().warn("SKIP: There are no input files. " + getInputFilesToString());
@@ -115,23 +118,21 @@ public class BuildMojo extends AbstractMojo {
 
 		public ConvertToHtmlTask(Path input) {
 			this.input = input;
-			getLog().debug("Processing... " + input);
 		}
 
 		public Path call() throws Exception {
-			String html = mdToHtml.getHtml(input);
 			Path out = getOutputPath();
-			Files.write(getOutputPath(), html.getBytes(), StandardOpenOption.CREATE);
+			getLog().info("Processing " + input + " > " + out);
+			String html = mdToHtml.getHtml(input);
+			Files.write(out, html.getBytes(), StandardOpenOption.CREATE);
 			return out;
 		}
 
 		public Path getOutputPath() {
-			String fileName = input.getFileName().toString();
-			int i = fileName.lastIndexOf('.');
-			Path newFile = input.resolveSibling(fileName.substring(0, i) + ".html");
-			Path relNewFile = Paths.get(inputFiles.getDirectory()).relativize(newFile).normalize();
-			getLog().info("rel new file " + relNewFile.toString());
-			return outputDirectory.toPath().resolve(relNewFile);
+			return PathUtils.change(
+					inputDirPath, 
+					PathUtils.switchExtension(input, ".html"), 
+					outputDirPath);
 		}
 	}
 }

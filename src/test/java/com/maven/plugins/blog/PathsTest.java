@@ -22,6 +22,11 @@ public class PathsTest {
 			{ "inputDir/dir", "f/inputFile", "outputDir", "outputDir/f/inputFile.html" },
 			{ "inputDir/dir/dir", "a/b/inputFile", "outputDir", "outputDir/a/b/inputFile.html" },
 			{ "inputDir/dir/dir", "a/b/inputFile.txt", "outputDir/o", "outputDir/o/a/b/inputFile.html" },
+			{ ".", "a/b/inputFile.md", "outputDir/o", "outputDir/o/a/b/inputFile.html" },
+			{ ".", "./inputFile.md", "target", "target/inputFile.html" },
+			{ ".", "inputFile.md", "target", "target/inputFile.html" },
+			{ ".", "inputFile.md", "/home/carlos/md-html/target", "/home/carlos/md-html/target/inputFile.html" },
+			{ ".", "inputFile.md", "t", "t/inputFile.html" },
 		});
 	}
 
@@ -46,10 +51,14 @@ public class PathsTest {
 	
 	@Test
 	public void testExtNoPoint() {
-		assertEquals(PathUtils.switchExtension(fInputFile, "html").getFileName().toString(), "inputFile.html");
+		assertEquals(
+				PathUtils.switchExtension(fInputFile, "html").getFileName().toString(), 
+				"inputFile.html");
 	}
 	@Test
 	public void testExtPoint() {
-		assertEquals(PathUtils.switchExtension(fInputFile, ".html").getFileName().toString(), "inputFile.html");
+		assertEquals(
+				PathUtils.switchExtension(fInputFile, ".html").getFileName().toString(), 
+				"inputFile.html");
 	}
 }
