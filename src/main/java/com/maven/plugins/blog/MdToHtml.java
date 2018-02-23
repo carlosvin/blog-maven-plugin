@@ -15,11 +15,10 @@ import org.commonmark.renderer.html.HtmlRenderer;
 @Singleton
 public class MdToHtml {
 
-	
 	private final Parser parser;
 	private final HtmlRenderer renderer;
 
-	MdToHtml() {
+	public MdToHtml() {
 		parser = Parser.builder().build();
 		renderer = HtmlRenderer.builder().build();
 	}
@@ -33,7 +32,5 @@ public class MdToHtml {
 		Node document = parser.parseReader(Files.newBufferedReader(mdFile));
 		return renderer.render(document);	
 	}
-	
-	
 	
 }

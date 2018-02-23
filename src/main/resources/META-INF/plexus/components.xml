@@ -1,0 +1,32 @@
+<component-set>
+	<components>
+		<component>
+			<role>org.apache.maven.lifecycle.mapping.LifecycleMapping</role>
+			<role-hint>md</role-hint>
+			<implementation>org.apache.maven.lifecycle.mapping.DefaultLifecycleMapping
+			</implementation>
+			<configuration>
+				<phases>
+					<site>
+						com.maven.plugins:blog:build
+					</site>
+
+					<site-deploy>
+						org.apache.maven.plugins:maven-site-plugin:3.7:deploy
+					</site-deploy>
+				</phases>
+			</configuration>
+		</component>
+
+		<component>
+			<role>org.apache.maven.artifact.handler.ArtifactHandler</role>
+			<role-hint>md</role-hint>
+			<implementation>org.apache.maven.artifact.handler.DefaultArtifactHandler
+			</implementation>
+			<configuration>
+				<extension>tar.gz</extension>
+				<type>md</type>
+			</configuration>
+		</component>
+	</components>
+</component-set>
