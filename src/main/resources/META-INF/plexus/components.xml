@@ -28,5 +28,34 @@
 				<type>md</type>
 			</configuration>
 		</component>
+		
+		<component>
+			<role>org.apache.maven.lifecycle.mapping.LifecycleMapping</role>
+			<role-hint>md-gh</role-hint>
+			<implementation>org.apache.maven.lifecycle.mapping.DefaultLifecycleMapping
+			</implementation>
+			<configuration>
+				<phases>
+					<site>
+						com.maven.plugins:blog:build
+					</site>
+
+					<site-deploy>
+						com.github.github:site-maven-plugin:0.12:deploy
+					</site-deploy>
+				</phases>
+			</configuration>
+		</component>
+		
+		<component>
+			<role>org.apache.maven.artifact.handler.ArtifactHandler</role>
+			<role-hint>md-gc</role-hint>
+			<implementation>org.apache.maven.artifact.handler.DefaultArtifactHandler
+			</implementation>
+			<configuration>
+				<extension>tar.gz</extension>
+				<type>md-gc</type>
+			</configuration>
+		</component>
 	</components>
 </component-set>

@@ -33,7 +33,7 @@ public class BuildMojo extends AbstractMojo {
 	/**
 	 * Location of the file.
 	 */
-	@Parameter(defaultValue = "${project.build.directory}", property = "outputDir", required = true)
+	@Parameter(defaultValue = "${project.reporting.outputDirectory}", property = "siteOutputDirectory", required = true)
 	private File outputDirectory;
 
 	/**

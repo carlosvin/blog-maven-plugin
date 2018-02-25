@@ -7,10 +7,9 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>maven-plugin</packaging>
 
-	<name>blog Maven Plugin</name>
+	<name>Blog Maven Plugin</name>
 
-	<!-- FIXME change it to the project's website -->
-	<url>http://maven.apache.org</url>
+	<url>https://github.com/carlosvin/blog-maven-plugin</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -80,7 +79,6 @@
 					<streamLogs>true</streamLogs>
 					<noLog>false</noLog>
 					<showErrors>true</showErrors>
-					<debug>true</debug>
 				</configuration>
 				<executions>
 					<execution>
