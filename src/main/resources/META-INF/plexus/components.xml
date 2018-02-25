@@ -24,7 +24,6 @@
 			<implementation>org.apache.maven.artifact.handler.DefaultArtifactHandler
 			</implementation>
 			<configuration>
-				<extension>tar.gz</extension>
 				<type>md</type>
 			</configuration>
 		</component>
@@ -53,7 +52,6 @@
 			<implementation>org.apache.maven.artifact.handler.DefaultArtifactHandler
 			</implementation>
 			<configuration>
-				<extension>tar.gz</extension>
 				<type>md-gc</type>
 			</configuration>
 		</component>
