@@ -24,4 +24,12 @@
     </plugins>
   </build>
   <packaging>md</packaging>
+
+  <distributionManagement>
+    <site>
+      <id>example.it.website</id>
+      <name>Example IT Website</name>
+      <url>file://${basedir}/target/website</url>
+    </site>
+  </distributionManagement>
 </project>

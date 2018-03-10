@@ -29,19 +29,25 @@ Lifecycle
     Let's see an example of lifecycle, e.g: `FooLifecycle` has `clean`, `prepare` and `assemble` phases. Each of those phases has one of more goals.
     FooLifecycle
 
-        clean
-            rmSources: a goal to remove source files
-            rmBuild: a goal to remove files in cache directory 
-        prepare
-            installDependencies: a goal to download dependencies for the project
-        assemble
-            build: a goal to compile source files
+        - clean
+            - rmSources: a goal to remove source files
+            - rmBuild: a goal to remove files in cache directory 
+        - prepare
+            - installDependencies: a goal to download dependencies for the project
+        - assemble
+            - build: a goal to compile source files
 
     To define a custom lifecycle as previous we will use previously mentioned `src/main/resources/META-INF/plexus/components.xml`.
     Normally is enough to override `predefined lifecycles <https://maven.apache.org/ref/3.5.3/maven-core/lifecycles.html>`_, in this example we will override site lifecycle.
 
-    .. hint:: A more than enough introduction to Maven lifecycles at https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html
-     
+.. hint:: You can find an introduction to Maven lifecycles at https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html
 
+
+Create your custom plugin
+=========================
+
+In this example we will create a plugin to `override site lifecycle <https://maven.apache.org/ref/3.5.3/maven-core/lifecycles.html#site_Lifecycle>`_, which has only 2 default phases, so when we run `mvn site` using our new custom plugin it will execute the goals we are about to create. 
+
+Our plugin will work with `md` file bindings: It will build the project and deploy it using `default maven deployment plugin <http://maven.apache.org/plugins/maven-deploy-plugin/>`_.
 
 Work in progress...
