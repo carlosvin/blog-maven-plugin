@@ -19,13 +19,29 @@ Maven plugin concepts
 =====================
 
 `Mojo <http://maven.apache.org/plugin-developers/index.html>`_
-An executable goal in Maven, e.g: `mvn your-plugin:your-mojo` will execute a maven goal `your-mojo` declared as part of `your-plugin`. 
+    An executable goal in Maven, e.g: `mvn your-plugin:your-mojo` will execute a maven goal `your-mojo` declared as part of `your-plugin`. 
 
 Goal
-It matches with `Mojo <http://maven.apache.org/plugin-developers/index.html>`_ execution
+    It matches with `Mojo <http://maven.apache.org/plugin-developers/index.html>`_ execution
 
 Lifecycle
-It is a well defined sequence of phases. Each phase consists of a sequence of goals.
-Let's see an example of lifecycle, e.g: FooLifecycle 
+    It is a well defined sequence of phases. Each phase consists of a sequence of goals.
+    Let's see an example of lifecycle, e.g: `FooLifecycle` has `clean`, `prepare` and `assemble` phases. Each of those phases has one of more goals.
+    FooLifecycle
+
+        clean
+            rmSources: a goal to remove source files
+            rmBuild: a goal to remove files in cache directory 
+        prepare
+            installDependencies: a goal to download dependencies for the project
+        assemble
+            build: a goal to compile source files
+
+    To define a custom lifecycle as previous we will use previously mentioned `src/main/resources/META-INF/plexus/components.xml`.
+    Normally is enough to override `predefined lifecycles <https://maven.apache.org/ref/3.5.3/maven-core/lifecycles.html>`_, in this example we will override site lifecycle.
+
+    .. hint:: A more than enough introduction to Maven lifecycles at https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html
+     
+
 
 Work in progress...
