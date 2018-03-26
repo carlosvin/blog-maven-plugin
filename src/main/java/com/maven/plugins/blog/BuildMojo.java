@@ -26,18 +26,20 @@ import org.apache.maven.shared.model.fileset.FileSet;
 import org.apache.maven.shared.model.fileset.util.FileSetManager;
 
 /**
- * Build the project
+ * Generate HTML files from Markdown files
  */
 @Mojo(name = "build", defaultPhase = LifecyclePhase.COMPILE)
 public class BuildMojo extends AbstractMojo {
+
 	/**
-	 * Location of the file.
+	 * Output direcotry path where HTML files are generated
 	 */
 	@Parameter(defaultValue = "${project.reporting.outputDirectory}", property = "siteOutputDirectory", required = true)
 	private File outputDirectory;
 
 	/**
 	 * A specific <code>fileSet</code> rule to select files and directories.
+	 * Fileset spec: https://maven.apache.org/shared/file-management/fileset.html
 	 */
 	@Parameter
 	private FileSet inputFiles;
