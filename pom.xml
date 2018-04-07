@@ -73,7 +73,6 @@
 				<artifactId>maven-invoker-plugin</artifactId>
 				<version>3.0.1</version>
 				<configuration>
-					<localRepositoryPath>${project.build.directory}/it-repo</localRepositoryPath>
 					<postBuildHookScript>verify</postBuildHookScript>
 					<showVersion>true</showVersion>
 					<streamLogs>true</streamLogs>
