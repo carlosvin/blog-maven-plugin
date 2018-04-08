@@ -32,7 +32,7 @@ import org.apache.maven.shared.model.fileset.util.FileSetManager;
 public class BuildMojo extends AbstractMojo {
 
 	/**
-	 * Output direcotry path where HTML files are generated
+	 * Output directory path where HTML files are generated
 	 */
 	@Parameter(defaultValue = "${project.reporting.outputDirectory}", property = "siteOutputDirectory", required = true)
 	private File outputDirectory;
